@@ -43,41 +43,38 @@ void game_display(cgame g){
 int main(int argc, char* argv[])
 {
 
-    game recolor = game_default();
-    game_display(recolor);
+  game recolor = game_default();
+  game_display(recolor);
 
-while (nbCoupMax <= 12 || game_is_over(recolor) == false)
+  while (game_nb_moves_cur(recolor) <= game_nb_moves_max(recolor) || game_is_over(recolor) == false)
   {
-    int reponse = getchar();
-    if(reponse == '0' || '1' || '2' || '3')
-        {
-          nbCoupMax++;
-          game_play_one_move(recolor, reponse);
-          if(game_is_over(recolor))
-            {
-              printf("BRAVO");
-            }
-          game_display(recolor);
-        }
+    const char reponse = getchar();
+    if(reponse == '0' || reponse == '1' || reponse == '2' ||reponse == '3')
+      {
+        game_play_one_move(recolor, atoi(&reponse));
+        if(game_is_over(recolor))
+          {
+            printf("BRAVO");
+          }
+        game_display(recolor);
+      }
 
     else if (reponse == 'r')
-        {
-          game_restart(recolor);
-          nbCoupMax = 0;
-        }
+      {
+        game_restart(recolor);
+        game_display(recolor);
+      }
 
     else if (reponse == 'q')
         {
           printf("DOMMAGE");
-        }
-
-    else
-        {
-        printf("je n ai pas compris votre reponse");
+          game_delete(recolor);
         }
   }
+  
   game_delete(recolor);
-
+  printf("fin\n");
+  
 
     EXIT_SUCCESS;
 }
