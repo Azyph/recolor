@@ -46,17 +46,17 @@ int main(int argc, char* argv[])
   game recolor = game_default();
   game_display(recolor);
 
-  while (game_nb_moves_cur(recolor) <= game_nb_moves_max(recolor) || game_is_over(recolor) == false)
-  {
+  while (game_nb_moves_cur(recolor) < game_nb_moves_max(recolor) && game_is_over(recolor) == false)
+  { 
     const char reponse = getchar();
     if(reponse == '0' || reponse == '1' || reponse == '2' ||reponse == '3')
       {
         game_play_one_move(recolor, atoi(&reponse));
+        game_display(recolor);
         if(game_is_over(recolor))
           {
-            printf("BRAVO");
+            printf("BRAVO\n");
           }
-        game_display(recolor);
       }
 
     else if (reponse == 'r')
@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 
     else if (reponse == 'q')
         {
-          printf("DOMMAGE");
+          printf("DOMMAGE\n");
           game_delete(recolor);
         }
   }
