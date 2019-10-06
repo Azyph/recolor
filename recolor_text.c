@@ -44,37 +44,35 @@ int main(int argc, char* argv[])
 {
 
   game recolor = game_default();
-  game_display(recolor);
 
-  while (game_nb_moves_cur(recolor) < game_nb_moves_max(recolor) && game_is_over(recolor) == false)
-  { 
-    const char reponse = getchar();
-    if(reponse == '0' || reponse == '1' || reponse == '2' ||reponse == '3')
-      {
-        game_play_one_move(recolor, atoi(&reponse));
-        game_display(recolor);
-        if(game_is_over(recolor))
-          {
-            printf("BRAVO\n");
-          }
-      }
-
-    else if (reponse == 'r')
-      {
-        game_restart(recolor);
-        game_display(recolor);
-      }
-
+  while (game_nb_moves_cur(recolor)<= game_nb_moves_max(recolor) || game_is_over(recolor) == false)
+  {
+    game_display(recolor);
+    char reponse = getchar();
+    if (reponse == 'r') 
+    {
+      game_restart(recolor);
+    }
     else if (reponse == 'q')
-        {
-          printf("DOMMAGE\n");
-          game_delete(recolor);
-        }
-  }
-  
-  game_delete(recolor);
-  printf("fin\n");
-  
+    {
+      printf("DOMMAGE\n");
+      game_delete(recolor);
+      break;
+    }
+    else if (reponse == '0' || reponse == '1' || reponse == '2' || reponse == '3')
+    {
+      game_play_one_move(recolor, atoi(&reponse));
+      if (game_is_over(recolor))
+      {
+        game_display(recolor);
+        printf ("BRAVO\n");
+        game_delete(recolor);
+        break;
+      }
+    }
+    
 
-    EXIT_SUCCESS;
+  }
+
+  EXIT_SUCCESS;
 }
